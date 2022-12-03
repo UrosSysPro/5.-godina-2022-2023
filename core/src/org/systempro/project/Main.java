@@ -5,7 +5,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
-import org.systempro.project.boid.sim.TestScreen;
+import org.systempro.project.game.TestScreen;
 
 public class Main extends Game {
 
