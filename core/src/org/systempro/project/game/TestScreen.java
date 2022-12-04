@@ -14,7 +14,7 @@ public class TestScreen extends BasicScreen {
     @Override
     public void show() {
         renderer=new ShapeRenderer();
-        niz=new Vector2[10];
+        niz=new Vector2[1000];
         for(int i=0;i<niz.length;i++){
             niz[i]=new Vector2(0,0);
         }
