@@ -44,7 +44,7 @@ public class Maze {
             System.out.println();
         }
     }
-    public void solveDfs(int x,int y){
+    public void solveBfs(int x,int y){
         for(int i=0;i<width;i++){
             for(int j=0;j<height;j++){
                 mat[i][j]=mat[i][j]==-2?-2:-1;
@@ -75,7 +75,7 @@ public class Maze {
             }
         }
     }
-    public void solveBfs(int x,int y){
+    public void solveDfs(int x,int y){
         for(int i=0;i<width;i++){
             for(int j=0;j<height;j++){
                 mat[i][j]=mat[i][j]==-2?-2:-1;

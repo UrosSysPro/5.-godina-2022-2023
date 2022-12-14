@@ -26,7 +26,7 @@ public class TestScreen extends BasicScreen {
             if(x>=0&&x<bfs.width&&y>=0&&y< bfs.height)bfs.toggleBlock(x,y);
         }
         if(Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)){
-            if(x>=0&&x<bfs.width&&y>=0&&y< bfs.height)bfs.solveDfs(x,y);
+            if(x>=0&&x<bfs.width&&y>=0&&y< bfs.height)bfs.solveBfs(x,y);
         }
         bfs.draw(renderer);
     }
