@@ -1,7 +1,7 @@
 package org.systempro.project;
 
 import com.badlogic.gdx.Game;
-import org.systempro.project.lavirint.TestScreen;
+import org.systempro.project.collision.TestScreen;
 
 public class Main extends Game {
 
