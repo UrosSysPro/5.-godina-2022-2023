@@ -2,6 +2,9 @@ package org.systempro.project.lavirint;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.util.LinkedList;
@@ -12,19 +15,32 @@ public class Game {
 
     public int[][] mapa;
     public int width,height;
-    float cellSize;
+    public float cellSize;
+    public Player player;
     public Random random;
-    ShapeRenderer renderer;
-    int max=0;
+    public ShapeRenderer renderer;
+    public TextureRegion[][] regions;
+    public SpriteBatch batch;
+    public int max=0;
 
-    public Game(int width,int height){
+    public Game(int cellSize){
+        regions=TextureRegion.split(
+            new Texture("dungeonGrass.png"),
+            16,
+            16
+        );
         random=new Random();
         renderer=new ShapeRenderer();
-        this.cellSize= (float) Gdx.graphics.getHeight()/height;
-        this.width=width;
-        this.height=height;
+        batch=new SpriteBatch();
+        this.cellSize= cellSize;
+
+        this.width=Gdx.graphics.getWidth()/cellSize;
+        this.height=Gdx.graphics.getHeight()/cellSize;
         mapa=new int[width][height];
         randomize();
+        //player
+
+        player=new Player(0,0,cellSize/2,cellSize/2);
     }
     public void randomize(){
         for(int i=0;i<width;i++){
@@ -89,46 +105,34 @@ public class Game {
         }
         System.out.println(max);
     }
-    public void print(){
-        for(int j=0;j<height;j++){
-            for(int i=0;i<width;i++){
-                System.out.print(mapa[i][j]);
-            }
-            System.out.println();
-        }
+
+    public void input(){
+        player.input();
+    }
+    public void update(float delta){
+        Gdx.graphics.setTitle(""+(int)(delta*1000));
+        player.update(mapa, (int) cellSize);
     }
     public void draw(){
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.setColor(Color.BLACK);
-        for(int j=0;j<height;j++){
-            for(int i=0;i<width;i++){
-                if(mapa[i][j]==-2)
-                    renderer.setColor(Color.BLACK);
-                else if(mapa[i][j]==-1)
-                    renderer.setColor(Color.DARK_GRAY);
-                else if(mapa[i][j]==0)
-                    renderer.setColor(Color.WHITE);
-                else{
-                    float alfa=(float)mapa[i][j]/(width);
-                    renderer.setColor(
-                        new Color(
-                            Color.BLUE.r*alfa+(1-alfa)*Color.CORAL.r,
-                            Color.BLUE.g*alfa+(1-alfa)*Color.CORAL.g,
-                            Color.BLUE.b*alfa+(1-alfa)*Color.CORAL.b,
-                            1f
-                        )
-                    );
+        batch.begin();
+        for(int i=0;i<width;i++){
+            for(int j=0;j<height;j++){
+                TextureRegion region;
+                if(mapa[i][j]!=-2){
+                    region=regions[4][3];
+                }else {
+                    region=regions[8][1];
                 }
                 float x=i*cellSize;
                 float y=(height-j-1)*cellSize;
-                renderer.rect(x,y,cellSize,cellSize);
+                batch.draw(region,x,y,cellSize,cellSize);
+
             }
         }
+        batch.end();
+
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
+        player.draw(renderer);
         renderer.end();
-    }
-    public static void main(String[] args) {
-        Game game=new Game(50,50);
-        game.randomize();
-        game.print();
     }
 }
