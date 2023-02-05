@@ -6,9 +6,20 @@ class Player:
     vx=0
     vy=1
     size=30
-    speed=2
+    speed=4
     canJump=True
-    jumpPower=2
+    jumpPower=7
+
+    def __init__(self) -> None:
+        self.still=pygame.image.load("sprites/alienGreen_front.png")
+        width=self.still.get_rect().width
+        height=self.still.get_rect().height
+        self.still=pygame.transform.scale(self.still,(self.size,self.size*2))
+        self.walk=[
+            pygame.image.load("sprites/alienGreen_walk1.png"),
+            pygame.image.load("sprites/alienGreen_walk2.png")
+        ]
+
     def input(self,keys):
         self.vx=0
         if keys[pygame.K_a]:
@@ -31,6 +42,7 @@ class Player:
                 self.vx=0
                 break
 
+        self.canJump=False
         self.y+=self.vy
         for p in platforms:
             if p.preklapaSe(self.x,self.y,self.size,self.size):
@@ -49,4 +61,5 @@ class Player:
 
     def draw(self,screen):
         color=(255,255,255)
-        pygame.draw.rect(screen,color,(self.x,self.y,self.size,self.size))
+        # pygame.draw.rect(screen,color,(self.x,self.y,self.size,self.size))
+        screen.blit(self.still,(self.x,self.y-self.size))
